@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
@@ -23,7 +25,10 @@ router = APIRouter()
 @router.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
 async def root(request: Request):
     headers = dict(request.headers)
-    payload = await request.json()
+    try:
+        payload = await request.json()
+    except JSONDecodeError:
+        payload = None
     if request.method == "GET":
         return JSONResponse({"message": f"GET-запрос, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
     elif request.method == "POST":
