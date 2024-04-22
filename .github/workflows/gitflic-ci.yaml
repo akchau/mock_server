@@ -1,0 +1,11 @@
+# .github/workflows/deploy.yml
+
+version: '1.0'
+
+stages:
+  - deploy
+
+job 0:
+  stage: deploy
+  script:
+    - ssh admin@178.154.227.155 'cd mock_server && git pull && python3.10 -m pip install -r req.txt && python3.10 main.py'
