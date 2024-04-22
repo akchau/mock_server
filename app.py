@@ -23,21 +23,21 @@ router = APIRouter()
 
 
 @router.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
-async def root(request: Request):
+async def root(request: Request, path: str):
     headers = dict(request.headers)
     try:
         payload = await request.json()
     except JSONDecodeError:
         payload = None
     if request.method == "GET":
-        return JSONResponse({"message": f"GET-запрос, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
+        return JSONResponse({"message": f"GET-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
     elif request.method == "POST":
-        return JSONResponse({"message": f"POST-запрос, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
+        return JSONResponse({"message": f"POST-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
     elif request.method == "DELETE":
-        return JSONResponse({"message": f"DELETE-запрос, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
+        return JSONResponse({"message": f"DELETE-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
     elif request.method == "PATCH":
-        return JSONResponse({"message": f"PATCH-запрос, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
+        return JSONResponse({"message": f"PATCH-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
     elif request.method == "PUT":
-        return JSONResponse({"message": f"PUT-запрос, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
+        return JSONResponse({"message": f"PUT-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}"}, status_code=200)
 
 app.include_router(router)
