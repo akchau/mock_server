@@ -1,0 +1,15 @@
+# .github/workflows/deploy.yml
+name: Deploy to server
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Deploy to server
+      run: |
+        ssh admin@178.154.227.155 'cd mock_server && git pull && python3.10 -m pip install -r req.txt && python3.10 main.py'
