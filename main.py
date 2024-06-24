@@ -1,4 +1,5 @@
 import uvicorn
+from settings import settings
 
 
 def runserver(*args, **kwargs):
@@ -6,7 +7,7 @@ def runserver(*args, **kwargs):
     uvicorn.run(
         'app:app',
         host="0.0.0.0",
-        port=8000,
+        port=settings.APP_PORT,
         **kwargs
     )
 
