@@ -34,17 +34,8 @@ async def root(request: Request, path: str, read_delay: int = 2):
     with_credentials = payload.get("withCredentials") if payload else None
     if read_delay > 0:
         time.sleep(read_delay)
-    if request.method == "GET":
-        print({"message": f"GET-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"})
-        return JSONResponse({"message": f"GET-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
-    elif request.method == "POST":
-        print({"message": f"POST-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"})
-        return JSONResponse({"message": f"POST-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
-    elif request.method == "DELETE":
-        return JSONResponse({"message": f"DELETE-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
-    elif request.method == "PATCH":
-        return JSONResponse({"message": f"PATCH-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
-    elif request.method == "PUT":
-        return JSONResponse({"message": f"PUT-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
+    print({"message": f"{request.method}-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"})
+    return JSONResponse({"message": f"{request.method}-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
+
 
 app.include_router(router)
