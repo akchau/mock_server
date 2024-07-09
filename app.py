@@ -23,14 +23,18 @@ app.add_middleware(
 router = APIRouter()
 
 
-@router.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
-async def root(request: Request, path: str, read_delay: int = 2):
-    headers = dict(request.headers)
+async def decode_payload(request: Request) -> dict | None | str:
     try:
         payload = await request.json()
     except JSONDecodeError:
         payload = None
+    return payload
 
+
+@router.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def root(request: Request, path: str, read_delay: int = 2):
+    headers = dict(request.headers)
+    payload = await decode_payload(request)
     with_credentials = payload.get("withCredentials") if payload else None
     if read_delay > 0:
         time.sleep(read_delay)
