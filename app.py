@@ -1,3 +1,4 @@
+import time
 from json import JSONDecodeError
 
 from fastapi import FastAPI, APIRouter, Request
@@ -23,7 +24,7 @@ router = APIRouter()
 
 
 @router.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
-async def root(request: Request, path: str):
+async def root(request: Request, path: str, read_delay: int = 2):
     headers = dict(request.headers)
     try:
         payload = await request.json()
@@ -31,7 +32,8 @@ async def root(request: Request, path: str):
         payload = None
 
     with_credentials = payload.get("withCredentials") if payload else None
-
+    if read_delay > 0:
+        time.sleep(read_delay)
     if request.method == "GET":
         print({"message": f"GET-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"})
         return JSONResponse({"message": f"GET-запрос, путь=/{path}, params={dict(request.query_params)}, headers={headers}, data={payload}, withCredentials={with_credentials}"}, status_code=200)
