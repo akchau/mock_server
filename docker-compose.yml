@@ -7,4 +7,4 @@ services:
       - EXTERNAL_PORT=${EXTERNAL_PORT}
       - APP_PORT=${APP_PORT}
     ports:
-      - "${APP_PORT}:${EXTERNAL_PORT}"
+      - "${EXTERNAL_PORT}:$APP_PORT}"
