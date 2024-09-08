@@ -43,3 +43,5 @@ async def root(request: Request, path: str, read_delay: int = 2):
 
 
 app.include_router(router)
+
+
