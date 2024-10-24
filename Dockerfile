@@ -1,12 +1,9 @@
 FROM python:3.10-slim
-
-ADD  . /app
-
 WORKDIR /app
-
-RUN pip install -r req.txt
-
-RUN pip uninstall watchfiles -y
-#RUN pip install --upgrade pydantic
-
+COPY req.txt /app
+RUN pip install -r req.txt && \
+    pip uninstall watchfiles -y
+ADD  . /app
+ARG APP_PORT
+EXPOSE $APP_PORT
 CMD ["python", "main.py", "runserver"]

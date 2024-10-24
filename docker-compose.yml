@@ -4,7 +4,6 @@ services:
     build:
       context: .
     environment:
-      - EXTERNAL_PORT=${EXTERNAL_PORT}
       - APP_PORT=${APP_PORT}
     ports:
       - "${EXTERNAL_PORT}:${APP_PORT}"
