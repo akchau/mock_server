@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     # Режим работы
     APP_PORT: int
     EXTERNAL_PORT: int
+    RESPONSE_CODE: int
+    READ_DELAY: int
 
     class Config:
         env_file = os.path.join(BASE_DIR, '.env')

@@ -1,6 +1,8 @@
 import uvicorn
+from logger import init_logger
 from settings import settings
 
+init_logger()
 
 def runserver(*args, **kwargs):
     kwargs['reload'] = True
