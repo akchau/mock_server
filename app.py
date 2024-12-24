@@ -1,10 +1,11 @@
+from io import StringIO
 import logging
 import time
 from json import JSONDecodeError
 
-from fastapi import FastAPI, APIRouter, Request
+from fastapi import FastAPI, APIRouter, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, StreamingResponse
 from settings import settings
 
 
@@ -51,9 +52,16 @@ async def root(request: Request, path: str):
                f"params={dict(request.query_params)}, "
                f"headers={headers}, data={payload}, "
                f"withCredentials={with_credentials}")
+    if settings.FILE:
+        file_stream = StringIO(message*100)
+        headers = {
+            "Content-Disposition": "attachment; filename=report.txt"
+        }
+        return StreamingResponse(file_stream, media_type="text/plain", headers=headers)
     logger.debug(message)
-    return JSONResponse({"message": message},
-                        status_code=settings.RESPONSE_CODE)
+    if str(settings.RESPONSE_CODE).startswith('2'):
+        return JSONResponse({"message": message}, status_code=settings.RESPONSE_CODE)
+    raise HTTPException(status_code=settings.RESPONSE_CODE, detail="Это детали ошибки.")
 
 
 app.include_router(router)

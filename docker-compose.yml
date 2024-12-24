@@ -3,6 +3,7 @@ services:
   web_server:
     build:
       context: .
+    restart: always
     environment:
       - APP_PORT=${APP_PORT}
     ports:

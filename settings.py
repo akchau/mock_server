@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     EXTERNAL_PORT: int
     RESPONSE_CODE: int
     READ_DELAY: int
+    FILE: bool
 
     class Config:
         env_file = os.path.join(BASE_DIR, '.env')
