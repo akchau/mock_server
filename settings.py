@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     RESPONSE_CODE: int
     READ_DELAY: int
     FILE: bool
+    REMOVE_CONTENT_TYPE: bool
 
     class Config:
         env_file = os.path.join(BASE_DIR, '.env')
