@@ -46,6 +46,7 @@ async def root(request: Request, path: str):
                f"params={dict(request.query_params)}, "
                f"headers={headers}, data={payload}, "
                f"withCredentials={with_credentials}")
+    logger.info(message)
     if settings.FILE:
         file_stream = StringIO(message * 100)
         headers = {"Content-Disposition": "attachment; filename=report.txt"}
