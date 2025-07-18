@@ -26,6 +26,7 @@ router = APIRouter()
 
 
 async def decode_payload(request: Request) -> dict | None | str:
+    """ Получение данных запроса из json """
     try:
         payload = await request.json()
     except JSONDecodeError:
@@ -56,6 +57,7 @@ async def root(request: Request, path: str):
     else:
         raise HTTPException(status_code=settings.RESPONSE_CODE, detail="Это детали ошибки.")
 
+    # TODO тут можно сделать более универсально и удалять любые заголовки
     if settings.REMOVE_CONTENT_TYPE:
         del response.headers["content-type"]  # Удаление заголовка Content-Type
 

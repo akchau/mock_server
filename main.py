@@ -5,6 +5,7 @@ from settings import settings
 init_logger()
 
 def runserver(*args, **kwargs):
+    """ Запуск веб-сервера """
     kwargs['reload'] = True
     uvicorn.run(
         'app:app',

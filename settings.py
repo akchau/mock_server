@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 
 class Settings(BaseSettings):
+    """ Конфигурация сервера """
 
     # Режим работы
     APP_PORT: int
