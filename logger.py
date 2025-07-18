@@ -34,6 +34,9 @@ def init_file_logger():
         )
         f_handler.setFormatter(f_format)
         logger.addHandler(f_handler)
+        logger.info(f"Логгирование в файл {settings.BASE_LOG_PATH} настроено.")
+    else:
+        logger.info("Логгирование в файл отключено.")
 
 
 def init_console_logger():
@@ -46,5 +49,7 @@ def init_console_logger():
 
 def init_logger():
     logger.setLevel(LOG_LEVEL)
-    init_file_logger()
+    # Сначала инициализируем консольный логгер
     init_console_logger()
+    # Только потом файловый, чтобы логгировать
+    init_file_logger()
