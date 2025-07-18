@@ -13,19 +13,20 @@ LOG_LEVEL = logging.DEBUG
 max_rotate_file_bytes = 1024 * 1024 * 300
 
 
+# Если запускаем из под докера то все норм
+# TODO может можно проверить тип запуска
+
 def init_file_logger():
     if isinstance(settings.BASE_LOG_PATH, str):
         logger.info("Подключение логгирования в файл")
-        logger.info(os.path.exists(settings.BASE_LOG_PATH))
-        if not os.path.exists(settings.BASE_LOG_PATH):
-            logger.debug(f"Базовый путь {settings.BASE_LOG_PATH} логов не существует. Создадим.")
-            os.makedirs(settings.BASE_LOG_PATH, exist_ok=True)
-            logger.debug("Базовый путь логов создан")
-        else:
-            logger.debug(f"Базовый путь {settings.BASE_LOG_PATH} логов существует.")
         
-        file_path = os.path.join(settings.BASE_LOG_PATH, 'debug.log')
+        container_path = "/var/log/mock_server"
         
+        if not os.path.exists(container_path):
+            os.makedirs(container_path, exist_ok=True)
+
+        file_path = os.path.join(container_path, 'debug.log')
+
         f_handler = RotatingFileHandler(
             file_path,
             maxBytes=max_rotate_file_bytes, 
