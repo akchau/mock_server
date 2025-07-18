@@ -9,4 +9,4 @@ x-common: &common
 services:
   web_server:
     <<: *common
-    volumes: ${BASE_LOG_PATH:+${BASE_LOG_PATH}:/var/log/mock_server}
+    volumes: ${BASE_LOG_PATH:-/dev/null}:/var/log/mock_server
