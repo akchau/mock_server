@@ -1,9 +1,12 @@
-version: '3.1'
+x-common: &common
+  build:
+    context: .
+  environment:
+    - APP_PORT=${APP_PORT}
+  ports:
+    - "${EXTERNAL_PORT}:${APP_PORT}"
+
 services:
   web_server:
-    build:
-      context: .
-    environment:
-      - APP_PORT=${APP_PORT}
-    ports:
-      - "${EXTERNAL_PORT}:${APP_PORT}"
+    <<: *common
+    volumes: ${BASE_LOG_PATH:+${BASE_LOG_PATH}:${BASE_LOG_PATH}}
