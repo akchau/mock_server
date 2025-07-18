@@ -1,12 +1,12 @@
-x-common: &common
-  build:
-    context: .
-  environment:
-    - APP_PORT=${APP_PORT}
-  ports:
-    - "${EXTERNAL_PORT}:${APP_PORT}"
+version: '3.1'
 
 services:
   web_server:
-    <<: *common
-    volumes: ${BASE_LOG_PATH:-/dev/null}:/var/log/mock_server
+    build:
+      context: .
+    environment:
+      - APP_PORT=${APP_PORT}
+    ports:
+      - "${EXTERNAL_PORT}:${APP_PORT}"
+    volumes:
+      - ${BASE_LOG_PATH:-/dev/null}:/var/log/mock_server
