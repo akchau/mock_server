@@ -15,15 +15,19 @@ max_rotate_file_bytes = 1024 * 1024 * 300
 
 def init_file_logger():
     if isinstance(settings.BASE_LOG_PATH, str):
+        logger.info("Подключение логгирования в файл")
+        logger.info(os.path.exists(settings.BASE_LOG_PATH))
         if not os.path.exists(settings.BASE_LOG_PATH):
-            logger.debug(f"Базовый путь {settings.BASE_LOG_PATH}  логов не существует. Создадим.")
+            logger.debug(f"Базовый путь {settings.BASE_LOG_PATH} логов не существует. Создадим.")
             os.makedirs(settings.BASE_LOG_PATH, exist_ok=True)
             logger.debug("Базовый путь логов создан")
         else:
-            logger.debug(f"Базовый путь {settings.BASE_LOG_PATH}  логов существует.")
+            logger.debug(f"Базовый путь {settings.BASE_LOG_PATH} логов существует.")
+        
+        file_path = os.path.join(settings.BASE_LOG_PATH, 'debug.log')
         
         f_handler = RotatingFileHandler(
-            os.path.join(settings.BASE_LOG_PATH, 'debug.log'),
+            file_path,
             maxBytes=max_rotate_file_bytes, 
             backupCount=3
         )
@@ -34,7 +38,7 @@ def init_file_logger():
         )
         f_handler.setFormatter(f_format)
         logger.addHandler(f_handler)
-        logger.info(f"Логгирование в файл {settings.BASE_LOG_PATH} настроено.")
+        logger.info(f"Логгирование в файл {file_path} настроено.")
     else:
         logger.info("Логгирование в файл отключено.")
 
