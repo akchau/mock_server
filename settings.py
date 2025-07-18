@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     READ_DELAY: int
     FILE: bool
     REMOVE_CONTENT_TYPE: bool
+    BASE_LOG_PATH: str
 
     class Config:
         env_file = os.path.join(BASE_DIR, '.env')
