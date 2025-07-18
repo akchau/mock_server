@@ -20,8 +20,13 @@ def init_file_logger():
     if isinstance(settings.BASE_LOG_PATH, str):
         logger.info("Подключение логгирования в файл")
         
+        host_log_file_path = os.path.join(settings.BASE_LOG_PATH, 'debug.log')
+        
+        # Внутренний путь для логов
         container_path = "/var/log/mock_server"
         
+        # TODO а может ли не существовать, если забиндился
+        # Создадим если не существует
         if not os.path.exists(container_path):
             os.makedirs(container_path, exist_ok=True)
 
@@ -39,7 +44,7 @@ def init_file_logger():
         )
         f_handler.setFormatter(f_format)
         logger.addHandler(f_handler)
-        logger.info(f"Логгирование в файл {file_path} настроено.")
+        logger.info(f"Логгирование в файл {host_log_file_path} настроено.")
     else:
         logger.info("Логгирование в файл отключено.")
 
